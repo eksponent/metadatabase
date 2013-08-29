@@ -1,0 +1,14 @@
+<div class="modal-header">
+	<button type="button" class="close" ng-click="close()">×</button>
+	<h3>Slet</h3>
+</div>
+<div class="modal-body">
+	Slet dokument
+	<div class="alert alert-error" ng-show="showError">
+		<strong>{{status}}</strong> {{data.reason}}
+	</div>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn" ng-click="close()">Luk</button>
+	<button type="button" class="btn btn-primary" ng-click="submit()">Slet</button>
+</div>

@@ -1,0 +1,28 @@
+<div class="modal-header">
+	<button type="button" class="close" ng-click="close()">×</button>
+	<h3>Log ind</h3>
+</div>
+<div class="modal-body">
+	<form class="form-horizontal" ng-submit="submit()">
+		<div class="control-group">
+			<label class="control-label">Brugernavn</label>
+			<div class="controls">
+				<input ng-model="user.name" type="text" placeholder="Brugernavn">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">Password</label>
+			<div class="controls">
+				<input ng-model="user.password" type="password" placeholder="Password">
+			</div>
+		</div>
+		<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
+	</form>
+	<div class="alert alert-error" ng-show="showError">
+		<strong>{{status}}</strong> {{data.reason}}
+	</div>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn" ng-click="close()">Luk</button>
+	<button type="button" class="btn btn-primary" ng-click="submit()">Log ind</button>
+</div>

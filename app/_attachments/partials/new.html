@@ -1,0 +1,101 @@
+<div class="container-fluid">
+<div class="row-fluid">
+	<div class="span12">
+		<div class="container">
+		<div ng-show="showSchemas">
+			<form class="form-horizontal" >
+				<div class="control-group">
+					<label class="control-label" for="selectSchema">Vælg type</label>
+					<div class="controls">
+						<select ng-model="schema" ng-options="s.key for s in results" ng-change="change()">
+						</select>
+					</div>
+				</div>
+			</form>
+			<hr/>
+		</div>
+		<div class="alert alert-error" ng-show="showMissing">
+			<h1><i class="icon-frown icon-4x"></i>Dokumentet findes ikke</h1>
+		</div>
+		
+			<form class="form-horizontal" name="my_form" novalidate ng-show="!showMissing">
+				<div class="control-group">
+					<div class="controls">
+						<a class="btn btn-primary btn-large" href="#/home"><i class="icon-arrow-left icon-large"></i> Tilbage</a>
+						<button ng-show="!isDisabled" ng-disabled="my_form.$invalid" type="submit" class="btn btn-primary btn-large pull-right" ng-click="gem()"><i ng-class="spinner"></i> Gem</button>
+						<button ng-show="!showSchemas && isDisabled" type="button" class="btn btn-primary btn-large pull-right" ng-click="ret()"><i class="icon-pencil icon-large"></i> Ret data</button>
+					</div>
+				</div>
+				<div ng-repeat="name in order">
+					<div ng-form="form">
+						
+						<div class="control-group"  ng-switch="result.properties[name].type" ng-class="{error: form.$invalid && !form.$pristine && !isDisabled, success: form.$valid && !form.$pristine && !isDisabled, warning: form.$error.required && !isDisabled}">
+							<label class="control-label" ng-show="result.properties[name].type!='ruler'">{{result.properties[name].label}}</label>
+							<div class="controls"  ng-switch-when="text">
+								<input class="input-xxlarge" type="text" ng-model="doc.properties[name]" ng-required="result.properties[name].required" ng-disabled="isDisabled"/> <span class="help-inline icon-flag" ng-show="form.$error.required && !isDisabled"></span><span class="icon-ok help-inline" ng-show="form.$valid && !form.$pristine"></span>
+							</div>
+							<div class="controls"  ng-switch-when="number">
+								<input class="input-xxlarge" type="number" ng-model="doc.properties[name]" ng-required="result.properties[name].required" ng-disabled="isDisabled"/> <span class="help-inline icon-flag" ng-show="form.$error.required && !isDisabled"></span><span class="icon-ok help-inline" ng-show="form.$valid && !form.$pristine"></span>
+							</div>
+							<div class="controls"  ng-switch-when="url">
+								<span class="input-append">
+								<input class="input-xxlarge" type="url" ng-model="doc.properties[name]" ng-required="result.properties[name].required" ng-disabled="isDisabled"/>
+								<a ng-href="{{doc.properties[name]}}" class="btn" target="_blank"><i class="icon-external-link"></i></a>
+							</span> <span class="help-inline icon-flag" ng-show="form.$error.required && !isDisabled"></span><span class="icon-ok help-inline" ng-show="form.$valid && !form.$pristine"></span>
+							</div>
+							<div class="controls" ng-switch-when="datetime">
+								<span class="input-append">
+  							  <input class="input-xxlarge" type="text" ng-model="doc.properties[name]" data-date-format="dd/mm/yyyy" bs-datepicker ng-required="result.properties[name].required" ng-disabled="isDisabled">
+  							  <button type="button" class="btn" data-toggle="datepicker" ng-disabled="isDisabled"><i class="icon-calendar"></i></button>
+						  		</span> <span class="help-inline icon-flag" ng-show="form.$error.required && !isDisabled"></span><span class="icon-ok help-inline" ng-show="form.$valid && !form.$pristine"></span>
+							</div>
+							<div class="controls" ng-switch-when="email">
+								<input class="input-xxlarge" type="email" ng-model="doc.properties[name]" ng-required="result.properties[name].required" ng-disabled="isDisabled"/> <span class="help-inline icon-flag" ng-show="form.$error.required && !isDisabled"></span><span class="icon-ok help-inline" ng-show="form.$valid && !form.$pristine"></span>
+							</div>
+							<div class="controls" ng-switch-when="color">
+								<input class="input-xxlarge" type="color" ng-model="doc.properties[name]" ng-required="result.properties[name].required" ng-disabled="isDisabled"/> <span class="help-inline icon-flag" ng-show="form.$error.required && !isDisabled"></span><span class="icon-ok help-inline" ng-show="form.$valid && !form.$pristine"></span>
+							</div>
+							<div class="controls" ng-switch-when="textarea">
+								<textarea class="input-xxlarge" rows="{{options.rows}}" ng-model="doc.properties[name]" ng-required="result.properties[name].required" ng-disabled="isDisabled"></textarea> <span class="help-inline icon-flag" ng-show="form.$error.required && !isDisabled"></span><span class="icon-ok help-inline" ng-show="form.$valid && !form.$pristine"></span>
+							</div>
+							<div class="controls" ng-switch-when="radio">
+								<label class="radio" ng-repeat="o in result.properties[name].options">
+									<input type="radio"  ng-model="doc.properties[name]" value="{{o.value}}" ng-required="result.properties[name].required" ng-disabled="isDisabled"/>
+									{{o.label}} <span class="help-inline icon-flag" ng-show="form.$error.required && $first && !isDisabled"></span><span class="icon-ok help-inline" ng-show="form.$valid && !form.$pristine && $first"></span>
+								</label>
+							</div>
+							<div class="controls" ng-switch-when="checkbox">
+								<div ng-switch="optionsDefined(result.properties[name])">
+									<div ng-switch-when="true">
+										<label class="checkbox" ng-repeat="o in result.properties[name].options">
+											<input type="checkbox" ng-model="doc.properties[name][o.label]" value="{{o.value}}" ng-disabled="isDisabled"/>
+											{{o.label}} <span class="icon-ok help-inline" ng-show="form.$valid && !form.$pristine && $first"></span>
+										</label>
+									</div>
+									<div ng-switch-when="false">
+										<label class="checkbox">
+											<input type="checkbox" ng-model="doc.properties[name]" ng-disabled="isDisabled"/> <span class="icon-ok help-inline" ng-show="form.$valid && !form.$pristine"></span>
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="controls" ng-switch-when="select">
+								<select class="input-xxlarge" ng-model="doc.properties[name]" ng-options="s.value as s.label for s in result.properties[name].options" ng-required="result.properties[name].required" ng-disabled="isDisabled">
+								</select> <span class="help-inline icon-flag" ng-show="form.$error.required && !isDisabled"></span><span class="icon-ok help-inline" ng-show="form.$valid && !form.$pristine"></span>
+							</div>
+							<legend ng-switch-when="ruler">{{result.properties[name].label}}</legend>
+						</div>
+					</div>
+				</div>
+				
+			</form>
+			<div class="alert alert-warning" ng-show="my_form.$error.required && !isDisabled">
+				<strong><i class="icon-flag"></i></strong> Felter er påkrævet 
+			</div>
+			<div class="alert alert-error" ng-show="showError && !isDisabled">
+				<strong>{{status}}</strong> {{data.reason}}
+			</div>
+		</div>
+	</div>
+</div>
+</div>

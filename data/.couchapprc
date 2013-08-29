@@ -1,0 +1,10 @@
+{
+"env" : {
+		"default" : {
+			"db" : "http://127.0.0.1:5984/metadata_app"
+		},
+		"deploy" : {
+			"db" : "http://54.246.116.17:5984/metadata_app"
+		}
+	}
+}

@@ -3,9 +3,7 @@ metadatabase
 
 Metadata-modul til geodata
 
-Installer CouchDB, ElasticSearch, Curl og CouchApp
-###CouchApp
-Installer fra http://couchapp.org/page/installing
+Installer CouchDB, ElasticSearch og Curl
 ###Curl
 Curl er en kommandolinie program til at kommunikere via http kommandoer. Det bruges til at starte replikering af CouchDB og ElasticSearch.
 Download her: http://curl.haxx.se/dlwiz/?type=bin
@@ -28,7 +26,7 @@ Hentes fra hjemmesiden:
 http://www.elasticsearch.org
 
 Udpak og kør bin/elasticsearch.bat
-Test i browser http://localhost:9200
+Test i browser http://127.0.0.1:9200
 
 ####Installer plugin til CouchDB
 https://github.com/elasticsearch/elasticsearch-river-couchdb
@@ -38,7 +36,7 @@ https://github.com/elasticsearch/elasticsearch-river-couchdb
 ####Konfiguration af ElasticSearch
 Opret index og mapping
 ```json
-curl -X POST http://localhost:9200/metadata_data/data/_mapping -d '{
+curl -X POST http://127.0.0.1:9200/metadata_data/data/_mapping -d '{
   "data":{
     "properties":{
       "properties":{
@@ -58,10 +56,10 @@ curl -X POST http://localhost:9200/metadata_data/data/_mapping -d '{
 ````
 Opret river
 ```json
-curl -X PUT http://localhost:9200/_river/metadata_data/_meta -d '{ 
+curl -X PUT http://127.0.0.1:9200/_river/metadata_data/_meta -d '{ 
   "type" : "couchdb", 
   "couchdb" : { 
-    "host" : "localhost",
+    "host" : "127.0.0.1",
     "port" : 5984,
     "db" : "metadata_data",
     "filter" : "app\/data" 
@@ -76,10 +74,10 @@ curl -X PUT http://localhost:9200/_river/metadata_data/_meta -d '{
 ```
 I windows skal alle " tegn erstattes med \"
 ####Test
-http://localhost:9200/metadata_data/_search?pretty=true
+http://127.0.0.1:9200/metadata_data/_search?pretty=true
 ##Installation
 Start CouchDB web interface
-http://localhost:5984/_utils/index.html
+http://127.0.0.1:5984/_utils/index.html
 
 I højreside under tools, vælg replicator
 Repliker to databaser fra:
@@ -90,11 +88,11 @@ http://54.246.116.17:5984/metadata_app
 
 til lokale databaser med tilsvarende navne.
 
-Test løsningen på http://localhost:5984/metadata_app/_design/app/index.html
+Test løsningen på http://127.0.0.1:5984/metadata_app/_design/app/index.html
 
 ##Formular opsætning
-http://localhost:5984/_utils/database.html?metadata_data/_design/app/_view/schema
+der medfølger demo skemaer til opsætning af formular:
 
-Viser skemaer til defination af formularopsætning.
+http://127.0.0.1:5984/_utils/database.html?metadata_data/_design/app/_view/schema
 
 Tilret eksisterende "test 1" og "test required".

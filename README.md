@@ -78,42 +78,23 @@ I windows skal alle " tegn erstattes med \"
 ####Test
 http://localhost:9200/metadata_data/_search?pretty=true
 ##Installation
-Download zip filen eller klon biblioteket med git:
+Start CouchDB web interface
+http://localhost:5984/_utils/index.html
 
-    git clone https://github.com/kosgis/metadatabase.git
-    
-rediger app/.couchapprc med adresse til CouchDB installationen
-```json
-{
-  "env" : {
-    "default" : {
-      "db" : "http://127.0.0.1:5984/metadata_app"
-    },
-    "deploy" : {
-      "db" : "http://user:password@54.246.116.17:5984/metadata_app"
-    }
-  }
-}
-```
-rediger data/.couchapprc med adresse til CouchDB installationen
-```json
-{
-  "env" : {
-    "default" : {
-      "db" : "http://127.0.0.1:5984/metadata_data"
-    },
-    "deploy" : {
-      "db" : "http://user:password@54.246.116.17:5984/metadata_data"
-    }
-  }
-}
-```
-Åben en kommandoprompt ihver af bibliotekerne app og data og kør:
+I højreside under tools, vælg replicator
+Repliker to databaser fra:
 
-	couchapp push
+http://54.246.116.17:5984/metadata_data
 
-eller
+http://54.246.116.17:5984/metadata_app
 
-	couchapp push deploy 
-	
-afængigt af om der skal installeres til lokal CouchDB eller produktion.
+til lokale databaser med tilsvarende navne.
+
+Test løsningen på http://localhost:5984/metadata_app/_design/app/index.html
+
+##Formular opsætning
+http://localhost:5984/_utils/database.html?metadata_data/_design/app/_view/schema
+
+Viser skemaer til defination af formularopsætning.
+
+Tilret eksisterende "test 1" og "test required".

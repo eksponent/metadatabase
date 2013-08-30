@@ -23,9 +23,7 @@ Husk ved Windows installation at sætte JAVA_HOME variabel.
 ![Alt text](/billeder/elasticsearch.png)
 
 Hentes fra hjemmesiden:
-http://www.elasticsearch.org
-
-Udpak og kør bin/elasticsearch.bat
+http://ruilopes.com/elasticsearch-setup/
 Test i browser http://127.0.0.1:9200
 
 ####Installer plugin til CouchDB

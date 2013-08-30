@@ -23,16 +23,25 @@ Husk ved Windows installation at sætte JAVA_HOME variabel.
 ![Alt text](/billeder/elasticsearch.png)
 
 Hentes fra hjemmesiden:
-http://ruilopes.com/elasticsearch-setup/
+Platform | URL
+---|---
+Windows | http://ruilopes.com/elasticsearch-setup
+Ubuntu | http://www.elasticsearch.org
+
 Test i browser http://127.0.0.1:9200
 
 ####Installer plugin til CouchDB
 https://github.com/elasticsearch/elasticsearch-river-couchdb
 
     bin/plugin -install elasticsearch/elasticsearch-river-couchdb/1.2.0
+    
+####Installer Web administration (ikke påkrævet)    
+http://mobz.github.io/elasticsearch-head
+
+    bin/plugin -install mobz/elasticsearch-head
 
 ####Konfiguration af ElasticSearch
-Opret index og mapping
+Opret index 
 ```json
 curl -X POST http://127.0.0.1:9200/metadata_data/data/_mapping -d '{
   "data":{
@@ -51,7 +60,27 @@ curl -X POST http://127.0.0.1:9200/metadata_data/data/_mapping -d '{
     }
   }
 }'
-````
+```
+Opret  mapping
+```json
+curl -X POST http://127.0.0.1:9200/metadata_data/data/_mapping -d '{
+  "data":{
+    "properties":{
+      "properties":{
+	    "properties":{
+          "titel" : {
+            "type" : "multi_field",
+            "fields" : {
+              "titel" : {"type" : "string", "index" : "analyzed"},
+              "untouched" : {"type" : "string", "index" : "not_analyzed"}
+            }
+          }
+        }
+      }
+    }
+  }
+}'
+```
 Opret river
 ```json
 curl -X PUT http://127.0.0.1:9200/_river/metadata_data/_meta -d '{ 

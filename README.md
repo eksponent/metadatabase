@@ -23,6 +23,7 @@ Husk ved Windows installation at sætte JAVA_HOME variabel.
 ![Alt text](/billeder/elasticsearch.png)
 
 Hentes fra hjemmesiden:
+
 Platform | URL
 ---|---
 Windows | http://ruilopes.com/elasticsearch-setup
@@ -42,25 +43,9 @@ http://mobz.github.io/elasticsearch-head
 
 ####Konfiguration af ElasticSearch
 Opret index 
-```json
-curl -X POST http://127.0.0.1:9200/metadata_data/data/_mapping -d '{
-  "data":{
-    "properties":{
-      "properties":{
-	    "properties":{
-          "titel" : {
-            "type" : "multi_field",
-            "fields" : {
-              "titel" : {"type" : "string", "index" : "analyzed"},
-              "untouched" : {"type" : "string", "index" : "not_analyzed"}
-            }
-          }
-        }
-      }
-    }
-  }
-}'
-```
+
+    curl -X POST http://127.0.0.1:9200/metadata_data
+
 Opret  mapping
 ```json
 curl -X POST http://127.0.0.1:9200/metadata_data/data/_mapping -d '{

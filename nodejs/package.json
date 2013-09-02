@@ -1,0 +1,8 @@
+{
+  "name": "SQL2Metadata",
+  "version": "0.0.1",
+  "dependencies": {
+    "tedious": "~0.1.5",
+    "xlsx": "~0.2.7-d"
+  }
+}

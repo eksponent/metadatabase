@@ -3,11 +3,11 @@
 /* Controllers */
 
 angular.module('metadata.controllers', []).
-controller('home', ['$scope', '$rootScope', '$templateCache', 'ejsResource', function ($scope, $rootScope, $templateCache, ejsResource) {
+controller('home', ['$scope', '$rootScope', '$routeParams','$templateCache', 'ejsResource', function ($scope, $rootScope, $routeParams, $templateCache, ejsResource) {
 			$scope.status = "icon-search";
 			$rootScope.frame = true;
 			$rootScope.isDisabled = true;
-			
+			$rootScope.instance = $routeParams.instance;
 			var ejs = ejsResource("http://" + window.location.hostname + ":9200");
 
 			var QueryObj = ejs.QueryStringQuery(); //.defaultField('properties.titel');
@@ -15,7 +15,7 @@ controller('home', ['$scope', '$rootScope', '$templateCache', 'ejsResource', fun
 			var activeFilters = {};
 
 			var client = ejs.Request()
-				.indices('metadata_data')
+				.indices($routeParams.instance)
 				.types('data');/*
 				.facet(
 					ejs.TermsFacet('tags')
@@ -111,14 +111,16 @@ controller('home', ['$scope', '$rootScope', '$templateCache', 'ejsResource', fun
 			$scope.showMissing = false;
 			$rootScope.isDisabled = true;
 			$rootScope.frame = $routeParams.frame;
+			$rootScope.instance = $routeParams.instance;
+			var instance = '/'+$routeParams.instance+'/';
 			$http({
 				method : 'GET',
-				url : '/metadata_data/' + $routeParams.id
+				url : instance + $routeParams.id
 			}).
 			success(function (data, status, headers, config) {
 				$http({
 					method : 'GET',
-					url : '/metadata_data/' + data.schema,
+					url : instance + data.schema,
 					doc : data
 				}).
 				success(function (data, status, headers, config) {
@@ -162,11 +164,11 @@ controller('home', ['$scope', '$rootScope', '$templateCache', 'ejsResource', fun
 						delete doc.properties[key];
 					}
 				});
-				$http.put('/metadata_data/_design/app/_update/data/' + $scope.doc._id, doc).
+				$http.put(instance+'_design/app/_update/data/' + $scope.doc._id, doc).
 				success(function (data, status) {
 					$templateCache.put('queryTerm', '');
 					$templateCache.put('showAll', false);
-					$location.path('/home');
+					$location.path(instance+'home');
 				}).
 				error(function (data, status) {
 					$scope.data = data || "Request failed";
@@ -186,12 +188,12 @@ controller('home', ['$scope', '$rootScope', '$templateCache', 'ejsResource', fun
 						if(result==='ok'){
 							$http({
 								method : "DELETE",
-								url : '/metadata_data/' + $scope.doc._id + '?rev=' + $scope.doc._rev
+								url : instance + $scope.doc._id + '?rev=' + $scope.doc._rev
 							}).
 							success(function (data, status) {
 								$templateCache.put('queryTerm', '');
 								$templateCache.put('showAll', false);
-								$location.path('/home');
+								$location.path(instance+'home');
 							}).
 							error(function (data, status) {
 								$scope.data = data || "Request failed";
@@ -323,14 +325,16 @@ controller('home', ['$scope', '$rootScope', '$templateCache', 'ejsResource', fun
 			  
 		}
 	])
-.controller('new', ['$scope', '$rootScope','$http', '$location','$templateCache', function ($scope, $rootScope, $http, $location,$templateCache) {
+.controller('new', ['$scope', '$routeParams', '$rootScope','$http', '$location','$templateCache', function ($scope, $routeParams, $rootScope, $http, $location,$templateCache) {
 			$rootScope.frame=true;
 			$rootScope.showSchemas = true;
 			$scope.showMissing = false;
 			$rootScope.isDisabled = false;
+			$rootScope.instance = $routeParams.instance;
+			var instance = '/'+$routeParams.instance+'/';
 			$http({
 				method : 'GET',
-				url : '/metadata_data/_design/app/_view/schema'
+				url : instance+'_design/app/_view/schema'
 			}).
 			success(function (data, status, headers, config) {
 				$scope.results = data.rows; // this callback will be called asynchronously
@@ -346,7 +350,7 @@ controller('home', ['$scope', '$rootScope', '$templateCache', 'ejsResource', fun
 			$scope.change = function () {
 				$http({
 					method : 'GET',
-					url : '/metadata_data/' + $scope.schema.id
+					url : instance + $scope.schema.id
 				}).
 				success(function (data, status, headers, config) {
 					$scope.result = data;
@@ -394,11 +398,11 @@ controller('home', ['$scope', '$rootScope', '$templateCache', 'ejsResource', fun
 						delete doc.properties[key];
 					}
 				});
-				$http.post('/metadata_data/_design/app/_update/data', doc).
+				$http.post(instance+'_design/app/_update/data', doc).
 				success(function (data, status) {
 					$templateCache.put('queryTerm', '');
 					$templateCache.put('showAll', false);
-					$location.path('/home');
+					$location.path(instance+'home');
 				}).
 				error(function (data, status) {
 					$scope.data = data || "Request failed";

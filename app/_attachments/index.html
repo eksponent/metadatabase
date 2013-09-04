@@ -21,11 +21,11 @@
 <body>
 <header class="navbar navbar-inverse navbar-fixed-top" ng-show="frame">
 	<div class="navbar-inner">
-    	<div ng-include="'/metadata_data/_design/app/partials/logo.html'"></div>
+    	<div ng-include="'/'+instance+'/_design/app/partials/logo.html'"></div>
 
 		<div class="container" ng-controller="login">
 			
-        	<a class="brand" href="#/home"><span style="color:black;">META</span>DATABASE</a>
+        	<a class="brand" href="#/{{instance}}/home"><span style="color:black;">META</span>DATABASE</a>
 			<div ng-show="userName">
 				<p class="navbar-text pull-right">Velkommen <strong>{{userName}}</strong></p>
 			</div>
@@ -33,7 +33,7 @@
 				<li class="dropdown">
 					<a class="dropdown-toggle"><i class="icon-reorder icon-large"></i></a>
 					<ul class="dropdown-menu">
-						<li ng-show="userName"><a href="#/new">Opret ny</a></li>
+						<li ng-show="userName"><a href="#/{{instance}}/new">Opret ny</a></li>
 						<li ng-show="!showSchemas && !isDisabled"><a ng-click="slet()">Slet</a></li>
 						<li ng-show="!userName"><a ng-click="login()">Log ind</a></li> 
 						<li ng-show="userName"><a ng-click="logout()">Log ud</a></li>    
@@ -45,7 +45,7 @@
 </header>
 <div ng-view></div>
 
-<footer ng-include="'/metadata_data/_design/app/partials/footer.html'" ng-show="frame">
+<footer ng-include="'/'+instance+'/_design/app/partials/footer.html'" ng-show="frame">
 	
 </footer>
 

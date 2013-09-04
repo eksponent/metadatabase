@@ -6,7 +6,8 @@ Metadata-modul til geodata
 Installer CouchDB, ElasticSearch og Curl
 
 Se installationsvejledning til Ubuntu 12.04 [her](https://github.com/kosgis/metadatabase/wiki/Ubuntu-12.04-installation)
-Se installationsvejledning til Ubuntu 12.04 [[her|Ubuntu-12.04-installation]]
+
+Se installationsvejledning til Ubuntu 12.04 [[Ubuntu-12.04-installation]]
 ###Curl
 Curl er en kommandolinie program til at kommunikere via http kommandoer. Det bruges til at starte replikering af CouchDB og ElasticSearch.
 Download her: http://curl.haxx.se/dlwiz/?type=bin

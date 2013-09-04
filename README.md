@@ -106,6 +106,11 @@ til lokale databaser med tilsvarende navne.
 
 Test løsningen på http://127.0.0.1:5984/metadata_app/_design/app/index.html#/metadata_data/home
 
+Databasen behøver ikke hedde metadata_data. Der kan oprettes flere databaser i CouchDB, f.eks. to databaser som hedder frederikssund og helsingor. Kør ovenstående kommander to gange men udskift navnet med henholdsvis helsingor og frederikssund.
+
+Løsningerne kaldes nu ved:
+http://127.0.0.1:5984/metadata_app/_design/app/index.html#/metadata_data/home
+
 ##Formular opsætning
 der medfølger demo skemaer til opsætning af formular:
 

@@ -104,7 +104,7 @@ http://54.246.116.17:5984/metadata_app
 
 til lokale databaser med tilsvarende navne.
 
-Test løsningen på http://127.0.0.1:5984/metadata_app/_design/app/index.html
+Test løsningen på http://127.0.0.1:5984/metadata_app/_design/app/index.html#/metadata_data/home
 
 ##Formular opsætning
 der medfølger demo skemaer til opsætning af formular:

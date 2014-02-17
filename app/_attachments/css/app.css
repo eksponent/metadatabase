@@ -1,14 +1,13 @@
-
-
-/* ==========================================================================
-   Author's custom styles
-   ========================================================================== */
-
 body {
-	padding-top: 60px;
-	padding-bottom: 40px;
-	}
-.bar.rect { fill: #005191; stroke: none; cursor: hand; cursor: pointer;}
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+.bar.rect {
+    fill: #005191;
+    stroke: none;
+    cursor: hand;
+    cursor: pointer;
+}
 /*.chart div { background-color: #005191; text-align: right;
   padding: 1px;
    margin: 2px;
@@ -17,63 +16,80 @@ body {
     cursor: pointer;
  }*/
 
-div.row-fluid [class*="span"] .center-in-span { float: none; margin: 0 auto; text-align: center; display: block; width:180px; height:auto; }
-
-.placeholder{
-	font-weight:bold;
-	color:#aaaaaa !important;
+div.row-fluid[class*="span"] .center-in-span {
+    float: none;
+    margin: 0 auto;
+    text-align: center;
+    display: block;
+    width: 180px;
+    height: auto;
 }
-
-.space{
-margin-top:20px;
-margin-bottom:20px;
+.placeholder {
+    font-weight: bold;
+    color: #aaaaaa !important;
 }
-.brand{
-font-weight:bold !important;
+.space {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
-.logo{
-height:40px;
-margin:0;
+.brand {
+    font-weight: bold !important;
+}
+.logo {
+    height: 40px;
+    margin: 0;
 }
 footer {
-background-color:white;
-padding:10px;
-text-align:center;
-color:#005191;
-
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+    color: #005191;
 }
-legend{
-color:#005191;
-border-bottom: 1px solid #005191;
+legend {
+    color: #005191;
+    border-bottom: 1px solid #005191;
 }
-h4{
-margin:0;
+h4 {
+    margin: 0;
 }
 i {
-text-decoration: none !important;
+    text-decoration: none !important;
 }
-
-.well{
-margin-bottom: 0;
+.well {
+    margin-bottom: 0;
 }
+/*
 label {
 cursor: default;
+}*/
+
+.media a,
+.media-body {
+    color: #005191;
 }
-.media a, .media-body {
-color:#005191;
+.media: hover {
+    background-color: #7F8993;
 }
-.media:hover {
-background-color:#7F8993;
+.media a {
+    text-decoration: none !important;
 }
-.media a{
-text-decoration: none !important;
+.media: hover a, .media: hover .media-body {
+    color: #e5e5e5;
 }
-.media:hover a, .media:hover .media-body{
-color:#e5e5e5;
+.media .icon-border {
+    border: solid 2px #005191;
 }
-.media .icon-border{
-border: solid 2px #005191;
+.media: hover .icon-border {
+    border: solid 2px #e5e5e5;
 }
-.media:hover .icon-border{
-border: solid 2px #e5e5e5;
+.myradio {
+    display: block;
+}
+.myradio label {
+    display: inline;
+    font-weight: 400;
+    cursor: pointer;
+}
+.radio input[type="radio"] {
+    margin-left: 0px;
 }

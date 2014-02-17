@@ -21,7 +21,7 @@
 			<form class="form-horizontal" name="my_form" novalidate ng-show="!showMissing">
 				<div class="control-group">
 					<div class="controls">
-						<a class="btn btn-primary btn-large" href="#/home"><i class="icon-arrow-left icon-large"></i> Tilbage</a>
+						<a class="btn btn-primary btn-large" ng-href="#/{{instance}}/home"><i class="icon-arrow-left icon-large"></i> Tilbage</a>
 						<button ng-show="!isDisabled" ng-disabled="my_form.$invalid" type="submit" class="btn btn-primary btn-large pull-right" ng-click="gem()"><i ng-class="spinner"></i> Gem</button>
 						<button ng-show="!showSchemas && isDisabled" type="button" class="btn btn-primary btn-large pull-right" ng-click="ret()"><i class="icon-pencil icon-large"></i> Ret data</button>
 					</div>
@@ -56,13 +56,15 @@
 								<input class="input-xxlarge" type="color" ng-model="doc.properties[name]" ng-required="result.properties[name].required" ng-disabled="isDisabled"/> <span class="help-inline icon-flag" ng-show="form.$error.required && !isDisabled"></span><span class="icon-ok help-inline" ng-show="form.$valid && !form.$pristine"></span>
 							</div>
 							<div class="controls" ng-switch-when="textarea">
-								<textarea class="input-xxlarge" rows="{{options.rows}}" ng-model="doc.properties[name]" ng-required="result.properties[name].required" ng-disabled="isDisabled"></textarea> <span class="help-inline icon-flag" ng-show="form.$error.required && !isDisabled"></span><span class="icon-ok help-inline" ng-show="form.$valid && !form.$pristine"></span>
+								<textarea class="input-xxlarge" rows="{{result.properties[name].rows}}" ng-model="doc.properties[name]" ng-required="result.properties[name].required" ng-disabled="isDisabled"></textarea> <span class="help-inline icon-flag" ng-show="form.$error.required && !isDisabled"></span><span class="icon-ok help-inline" ng-show="form.$valid && !form.$pristine"></span>
 							</div>
 							<div class="controls" ng-switch-when="radio">
-								<label class="radio" ng-repeat="o in result.properties[name].options">
-									<input type="radio"  ng-model="doc.properties[name]" value="{{o.value}}" ng-required="result.properties[name].required" ng-disabled="isDisabled"/>
-									{{o.label}} <span class="help-inline icon-flag" ng-show="form.$error.required && $first && !isDisabled"></span><span class="icon-ok help-inline" ng-show="form.$valid && !form.$pristine && $first"></span>
-								</label>
+                                <div class="myradio" ng-repeat="o in result.properties[name].options">
+                                    <label class="radio" >
+                                        <input type="radio"  ng-model="doc.properties[name]" value="{{o.value}}" ng-required="result.properties[name].required" ng-disabled="isDisabled"/>
+                                        {{o.label}} <span class="help-inline icon-flag" ng-show="form.$error.required && $first && !isDisabled"></span><span class="icon-ok help-inline" ng-show="form.$valid && !form.$pristine && $first"></span>
+                                    </label>
+                                </div>
 							</div>
 							<div class="controls" ng-switch-when="checkbox">
 								<div ng-switch="optionsDefined(result.properties[name])">

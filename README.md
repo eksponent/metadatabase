@@ -100,7 +100,7 @@ Repliker to databaser fra:
 
 http://metadatabase.dk:5984/metadata_data
 
-http://metadtabase.dk:5984/metadata_app
+http://metadatabase.dk:5984/metadata_app
 
 til lokale databaser med tilsvarende navne.
 

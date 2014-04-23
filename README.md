@@ -98,9 +98,9 @@ http://127.0.0.1:5984/_utils/index.html
 I højreside under tools, vælg replicator
 Repliker to databaser fra:
 
-http://54.246.116.17:5984/metadata_data
+http://metadatabase.dk:5984/metadata_data
 
-http://54.246.116.17:5984/metadata_app
+http://metadtabase.dk:5984/metadata_app
 
 til lokale databaser med tilsvarende navne.
 

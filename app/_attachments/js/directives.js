@@ -1,128 +1,38 @@
 /*jshint globalstrict:true */
 /*global angular:true */
-
+/*global Modernizr:true */
+'use strict';
 angular.module('metadata.directives', [])
-/*.directive('bar', function () {
 
-	return {
-		restrict : 'E',
+.directive('placeholder', ['$timeout',
+    function($timeout) {
 
-		scope : {
-			onClick : '=',
-			bind : '=',
-			field : '@'
-		},
-
-		link : function (scope, element, attrs) {
-
-			var width = 300;
-			var height = 250;
-
-			var x = d3.scale.linear().range([0, width]);
-			var y = d3.scale.ordinal().rangeBands([0, height], .1);
-
-			var svg = d3.select(element[0])
-				.append('svg')
-				.attr('preserveAspectRatio', 'xMaxYMin meet')
-				.attr('viewBox', '0 0 ' + (width + 75) + ' ' + height)
-				.append('g');
-
-			scope.$watch('bind', function (data) {
-
-				if (data) {
-
-					x.domain([0, d3.max(data, function (d) {
-								return d.count;
-							})]);
-					y.domain($.map(data,function (d) {
-							return d.term;
-						}));
-
-					var bars = svg.selectAll('rect')
-						.data(data, function (d, i) {
-							return Math.random();
-						});
-
-					// d3 enter fn binds each new value to a rect
-					bars.enter()
-					.append('rect')
-					.attr('class', 'bar rect')
-					.attr('y', function (d) {
-						return y(d.term);
-					})
-					.attr('height', y.rangeBand())
-					.attr('width', function (d) {
-						return x(d.count);
-					});
-
-					// wire up event listeners - (registers filter callback)
-					bars.on('mousedown', function (d) {
-						scope.$apply(function () {
-							(scope.onClick || angular.noop)(scope.field, d.term);
-						});
-					});
-
-					// d3 exit/remove flushes old values (removes old rects)
-					bars.exit().remove();
-
-					var labels = svg.selectAll('text')
-						.data(data, function (d) {
-							return Math.random();
-						});
-
-					labels.enter()
-					.append('text')
-					.attr('y', function (d) {
-						return y(d.term) + y.rangeBand() / 2;
-					})
-					.attr('x', function (d) {
-						return x(d.count) + 3;
-					})
-					.attr('dy', '.35em')
-					.attr('text-anchor', function (d) {
-						return 'start';
-					})
-					.text(function (d) {
-						return d.term + ' (' + d.count + ')';
-					});
-
-					// d3 exit/remove flushes old values (removes old rects)
-					labels.exit().remove();
-				}
-			});
-		}
-	};
-})*/
-.directive('placeholder', ['$timeout', function ( $timeout ) {
-	
-		if ( Modernizr.input.placeholder === true ) return {};
+        if (Modernizr.input.placeholder === true) return {};
         return {
-            link : function ( scope, elm, attrs ) {
-                if ( attrs.type === 'password' ) return;
-				elm.addClass("placeholder");
-                $timeout( function () {
-                    elm.val( attrs.placeholder ).bind('focus',function () {
-						elm.removeClass("placeholder");
-						if ( elm.val() == elm.attr( 'placeholder' ) ) {
-                            elm.val( '' );
-							
+            link: function(scope, elm, attrs) {
+                if (attrs.type === 'password') return;
+                elm.addClass('placeholder');
+                $timeout(function() {
+                    elm.val(attrs.placeholder).bind('focus', function() {
+                        elm.removeClass('placeholder');
+                        if (elm.val() == elm.attr('placeholder')) {
+                            elm.val('');
+
+                        } else {
+
                         }
-						else{
-						
-						}
-                    } ).bind('blur', function () {
-                            if ( elm.val() == '' ) {
-                                elm.val( elm.attr( 'placeholder' ) );
-								elm.addClass("placeholder");
-                            }
-							else{
-								elm.removeClass("placeholder");
-								
-								
-							}
-                        } );
-                } );
+                    }).bind('blur', function() {
+                        if (elm.val() === '') {
+                            elm.val(elm.attr('placeholder'));
+                            elm.addClass('placeholder');
+                        } else {
+                            elm.removeClass('placeholder');
+
+
+                        }
+                    });
+                });
             }
         };
-    } ] );
-
+    }
+]);

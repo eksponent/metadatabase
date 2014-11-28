@@ -1,17 +1,19 @@
-angular.module('metadata.controllers')
-.controller('login', ['$scope', '$rootScope', '$http', '$dialog',
+/* global angular:true*/
+"use strict";
+angular.module("metadata.controllers")
+.controller("login", ["$scope", "$rootScope", "$http", "$dialog",
     function($scope, $rootScope, $http, $dialog) {
         $scope.user = {
-            name: '',
-            password: ''
+            name: "",
+            password: ""
         };
         $scope.submit = function() {
             alert("1");
         };
         $scope.showError = false;
         $http({
-            method: 'GET',
-            url: '/_session'
+            method: "GET",
+            url: "/_session"
         }).
         success(function(data, status, headers, config) {
             if (data.userCtx && data.userCtx.name)
@@ -23,9 +25,9 @@ angular.module('metadata.controllers')
         });
 
         $scope.logout = function() {
-            $http["delete"]('/_session').
+            $http["delete"]("/_session").
             success(function(data, status, headers, config) {
-                $rootScope.userName = null
+                $rootScope.userName = null;
             }).
             error(function(data, status, headers, config) {
                 // called asynchronously if an error occurs
@@ -38,20 +40,13 @@ angular.module('metadata.controllers')
             keyboard: true,
             backdropClick: true,
 
-            templateUrl: 'partials/login.html',
-            controller: 'TestDialogController'
+            templateUrl: "partials/login.html",
+            controller: "TestDialogController"
         };
 
         $rootScope.login = function() {
             var d = $dialog.dialog(opts);
             d.open();
-            /*.then(function(result){
-			      if(result)
-			      {
-			        alert('dialog closed with result: ' + result);
-			      }
-			    });*/
         };
-
     }
 ]);

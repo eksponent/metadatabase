@@ -1,19 +1,20 @@
-'use strict';
-
+"use strict";
+/* global console:true*/
+/* global angular:true*/
 /* Controllers */
 
-angular.module('metadata.controllers')
-    .controller('new', ['$scope', '$routeParams', '$rootScope', '$http', '$location', '$templateCache',
+angular.module("metadata.controllers")
+    .controller("new", ["$scope", "$routeParams", "$rootScope", "$http", "$location", "$templateCache",
         function($scope, $routeParams, $rootScope, $http, $location, $templateCache) {
             $rootScope.frame = true;
             $rootScope.showSchemas = true;
             $scope.showMissing = false;
             $rootScope.isDisabled = false;
             $rootScope.instance = $routeParams.instance;
-            var instance = '/' + $routeParams.instance + '/';
+            var instance = "/" + $routeParams.instance + "/";
             $http({
-                method: 'GET',
-                url: instance + '_design/app/_view/schema'
+                method: "GET",
+                url: instance + "_design/app/_view/schema"
             }).
             success(function(data, status, headers, config) {
                 $scope.results = data.rows; // this callback will be called asynchronously
@@ -28,7 +29,7 @@ angular.module('metadata.controllers')
             });
             $scope.change = function() {
                 $http({
-                    method: 'GET',
+                    method: "GET",
                     url: instance + $scope.schema.id
                 }).
                 success(function(data, status, headers, config) {
@@ -68,6 +69,7 @@ angular.module('metadata.controllers')
                     // or server returns response with an error status.
                 });
             };
+
             $scope.gem = function() {
                 $scope.spinner = "icon-spinner icon-spin icon-large";
                 var doc = $scope.doc;
@@ -77,11 +79,11 @@ angular.module('metadata.controllers')
                         delete doc.properties[key];
                     }
                 });
-                $http.post(instance + '_design/app/_update/data', doc).
+                $http.post(instance + "_design/app/_update/data", doc).
                 success(function(data, status) {
-                    $templateCache.put('queryTerm', '');
-                    $templateCache.put('showAll', false);
-                    $location.path(instance + 'home');
+                    $templateCache.put("queryTerm", "");
+                    $templateCache.put("showAll", false);
+                    $location.path(instance + "home");
                 }).
                 error(function(data, status) {
                     $scope.data = data || "Request failed";
@@ -93,7 +95,7 @@ angular.module('metadata.controllers')
             $scope.spinner = "icon-save icon-large";
             $scope.optionsDefined = function(settings) {
                 if (settings.options)
-                    return true
+                    return true;
                 return false;
             };
             $scope.required = function(form) {
@@ -114,7 +116,7 @@ angular.module('metadata.controllers')
                 return false;
             };
             $scope.dateRequired = function(form) {
-                console.log();
+                console.log("Date required triggered in form "+form);
             };
         }
     ]);

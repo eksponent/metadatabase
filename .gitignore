@@ -1,3 +1,5 @@
 scripts/node_modules
 scripts/config.json
 scripts/Exported.xlsx
+app/.couchapprc
+data/.couchapprc

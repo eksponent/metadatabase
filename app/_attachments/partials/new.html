@@ -21,14 +21,14 @@
 			<form class="form-horizontal" name="my_form" novalidate ng-show="!showMissing">
 				<div class="control-group">
 					<div class="controls">
-						<a class="btn btn-primary btn-large" ng-href="#/{{instance}}/home"><i class="icon-arrow-left icon-large"></i> Tilbage</a>
+						<a class="btn btn-primary btn-large" ng-href="#/{{instance}}/home"><i class="icon-arrow-left icon-large"></i> XXTilbage</a>
 						<button ng-show="!isDisabled" ng-disabled="my_form.$invalid" type="submit" class="btn btn-primary btn-large pull-right" ng-click="gem()"><i ng-class="spinner"></i> Gem</button>
 						<button ng-show="!showSchemas && isDisabled" type="button" class="btn btn-primary btn-large pull-right" ng-click="ret()"><i class="icon-pencil icon-large"></i> Ret data</button>
 					</div>
 				</div>
 				<div ng-repeat="name in order">
 					<div ng-form="form">
-						
+							
 						<div class="control-group"  ng-switch="result.properties[name].type" ng-class="{error: form.$invalid && !form.$pristine && !isDisabled, success: form.$valid && !form.$pristine && !isDisabled, warning: form.$error.required && !isDisabled}">
 							<label class="control-label" ng-show="result.properties[name].type!='ruler'">{{result.properties[name].label}}</label>
 							<div class="controls"  ng-switch-when="text">

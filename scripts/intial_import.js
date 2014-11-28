@@ -2,13 +2,22 @@ var http = require('http');
 var XLSX = require('xlsx');
 var fs = require('fs');
 
+// brugernavn, password og hostname bliver overskrevet,
+// hvis der er en fil der hedder config.json (den holdes ude af git. Brug config-template.json som template)
 var username = 'xxx'; //skriv eget
 var password = 'xxx'; //skriv eget
 var hostname = '127.0.0.1'; 
+
 var inputfile = 'Mappe1.xlsx';
 var schemaId = '848dc353c63f0054ce285e5e0b0537da';
 var createSchema = false;
 
+if(fs.existsSync('config.json')){
+    var cfg = JSON.parse(fs.readFileSync('config.json',{encoding:'UTF-8'}));    
+    username=cfg.username;
+    password=cfg.password;
+    hostname=cfg.hostname;
+}
 
 
 debugger;

@@ -3,10 +3,26 @@ var http = require('http');
 var rp = require('request-promise');
 var _ = require('underscore');
 var fs = require('fs');
+
+var inputFileName = 'Exported.xlsx';
+
+
+// brugernavn, password og hostname bliver overskrevet,
+// hvis der er en fil der hedder config.json (den holdes ude af git. Brug config-template.json som template)
 var username = 'xxx'; //skriv eget
 var password = 'xxx'; //skriv eget
-var hostname = '127.0.0.1'; 
-var inputFileName = 'Exported.xlsx';
+var hostname = '127.0.0.1';
+
+
+if(fs.existsSync('config.json')){
+    var cfg = JSON.parse(fs.readFileSync('config.json',{encoding:'UTF-8'}));    
+    username=cfg.username;
+    password=cfg.password;
+    hostname=cfg.hostname;
+}
+
+
+
 
 
 var xlsx = XLSX.readFile(inputFileName);

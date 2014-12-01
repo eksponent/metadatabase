@@ -55,10 +55,7 @@ angular.module("metadata.controllers")
                             case "ruler":
                                 break;
                             default:
-                                if (value["default"])
-                                    doc.properties[key] = value["default"];
-                                else
-                                    doc.properties[key] = "";
+                                doc.properties[key] = '';
                                 break;
                         }
                     }, doc);
@@ -116,7 +113,7 @@ angular.module("metadata.controllers")
                 return false;
             };
             $scope.dateRequired = function(form) {
-                console.log("Date required triggered in form "+form);
+                console.log("Date required triggered in form " + form);
             };
         }
     ]);

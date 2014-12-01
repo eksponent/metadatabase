@@ -7,6 +7,8 @@ var fs = require('fs');
 var username = 'xxx'; //skriv eget
 var password = 'xxx'; //skriv eget
 var hostname = '127.0.0.1'; 
+var dbname= 'metadata_data';
+
 
 var inputfile = 'Mappe1.xlsx';
 var schemaId = '848dc353c63f0054ce285e5e0b0537da';
@@ -17,6 +19,7 @@ if(fs.existsSync('config.json')){
     username=cfg.username;
     password=cfg.password;
     hostname=cfg.hostname;
+    dbname=cfg.dbname;
 }
 
 
@@ -95,7 +98,7 @@ http.get('http://' + hostname + ':5984/_uuids', function(res) {
             var options = {
                 hostname: hostname,
                 port: 5984,
-                path: '/metadata_data/' + uuid,
+                path: '/'+dbname+'/' + uuid,
                 method: 'PUT',
                 auth: username + ':' + password,
                 headers: {
@@ -140,7 +143,7 @@ http.get('http://' + hostname + ':5984/_uuids', function(res) {
             var optionsDocs = {
                 hostname: hostname,
                 port: 5984,
-                path: '/metadata_data/_bulk_docs',
+                path: '/'+dbname+'/_bulk_docs',
                 method: 'POST',
                 auth: username + ':' + password,
                 headers: {

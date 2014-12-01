@@ -10,7 +10,9 @@ var fs = require('fs');
 var username = 'xxx'; //skriv eget
 var password = 'xxx'; //skriv eget
 var hostname = '127.0.0.1';
+var dbname='metadata_data';
 var outputFileName = 'Exported.xlsx';
+
 
 
 
@@ -20,10 +22,11 @@ if(fs.existsSync('config.json')){
     username=cfg.username;
     password=cfg.password;
     hostname=cfg.hostname;
+    dbname=cfg.dbname;
 }
 
 
-var dataUrl = 'http://'+hostname+':5984/metadata_data/_design/app/_view/data?include_docs=true'
+var dataUrl = 'http://'+hostname+':5984/'+dbname+'/_design/app/_view/data?include_docs=true'
 
 function uniqueFilter(value, index, self) {
     return self.indexOf(value) === index;

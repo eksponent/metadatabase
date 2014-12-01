@@ -7,22 +7,20 @@ var fs = require('fs');
 var inputFileName = 'Exported.xlsx';
 
 
-// brugernavn, password og hostname bliver overskrevet,
+// brugernavn, password, hostname og dbname bliver overskrevet,
 // hvis der er en fil der hedder config.json (den holdes ude af git. Brug config-template.json som template)
 var username = 'xxx'; //skriv eget
 var password = 'xxx'; //skriv eget
 var hostname = '127.0.0.1';
-
+var dbname ='metadata_data';
 
 if(fs.existsSync('config.json')){
     var cfg = JSON.parse(fs.readFileSync('config.json',{encoding:'UTF-8'}));    
     username=cfg.username;
     password=cfg.password;
     hostname=cfg.hostname;
+    dbname=cfg.dbname;
 }
-
-
-
 
 
 var xlsx = XLSX.readFile(inputFileName);
@@ -86,7 +84,7 @@ function saveDocs(docs) {
             var optionsDocs = {
                 hostname: hostname,
                 port: 5984,
-                path: '/metadata_data/_bulk_docs',
+                path: '/'+dbname+'/_bulk_docs',
                 method: 'POST',
                 auth: username + ':' + password,
                 headers: {

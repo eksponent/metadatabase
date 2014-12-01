@@ -4,16 +4,15 @@ var Promise = require('bluebird');
 var username = 'xxx'; //skriv eget
 var password = 'xxx'; //skriv eget
 var hostname= '127.0.0.1';
+var dbname='metadata_data';
 
-var options = {
-	hostname : hostname,
-	port : 5984,
-	path : '/metadata_data/data/_mapping',
-	method : 'DELETE',
-	auth: username+':'+password,
-	headers: { "Content-Type": "application/json" }};
-
-
+if(fs.existsSync('config.json')){
+    var cfg = JSON.parse(fs.readFileSync('config.json',{encoding:'UTF-8'}));    
+    username=cfg.username;
+    password=cfg.password;
+    hostname=cfg.hostname;
+    dbname=cfg.dbname;
+}
 
 function del(path){
 	var url = 'http://'+hostname+':9200/'+path;
@@ -22,13 +21,13 @@ function del(path){
 }
 
 function deleteRiver(){
-	return del('_river/metadata_data');
+	return del('_river/'+dbname+'');
 }
 function deleteMapping(){
-	return del('metadata_data/data/_mapping');
+	return del(''+dbname+'/data/_mapping');
 }
 function deleteIndex(){
-	return del('metadata_data');
+	return del(''+dbname+'');
 }
 
 
@@ -48,7 +47,7 @@ Promise.settle([deleteRiver(),deleteMapping(),deleteIndex()])
 
 function createIndex(){
 	console.log('creating index');
-	return 	rp.post('http://127.0.0.1:9200/metadata_data');
+	return 	rp.post('http://'+hostname+':9200/'+dbname+'');
 }
 
 
@@ -59,18 +58,18 @@ function createRiver(){
 	  "couchdb" : { 
 	    "host" : "127.0.0.1",
 	    "port" : 5984,
-	    "db" : "metadata_data",
+	    "db" : dbname,
 	    "filter" : "app/data"
 	  },
 	  "index" : { 
-	    "index" : "metadata_data",
+	    "index" : dbname,
 	    "type" : "data",
 	    "bulk_size" : 100,
 	    "bulk_timeout" : "10ms" 
 	  }
 	};
 	var options={
-		url:'http://127.0.0.1:9200/_river/metadata_data/_meta',
+		url:'http://'+hostname+':9200/_river/'+dbname+'/_meta',
 		json: json
 	}
 	return rp.put(options);
@@ -98,7 +97,7 @@ function createMapping(){
 		};
 
 	var options={
-		url:'http://127.0.0.1:9200/metadata_data/data/_mapping',
+		url:'http://'+hostname+':9200/'+dbname+'/data/_mapping',
 		json: json
 	}
 	return rp.put(options);

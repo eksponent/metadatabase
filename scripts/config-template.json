@@ -1,5 +1,6 @@
 {
     "username": "[dit username]",
     "password": "[dit password]",
-    "hostname": "127.0.0.1"
+    "hostname": "127.0.0.1",
+    "dbname":"metadata_data"
 }

@@ -93,3 +93,17 @@ cursor: default;
 .radio input[type="radio"] {
     margin-left: 0px;
 }
+
+div.hidePlaceholders input::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #fff;
+}
+div.hidePlaceholders input:-ms-input-placeholder { /* IE browsers */
+    color:    #fff;
+}
+div.hidePlaceholders input::-moz-placeholder { /* new firefox browsers */
+    color:    #fff;
+}
+div.hidePlaceholders input:-moz-placeholder { /* old firefox browsers */
+    color:    #fff;
+}
+

@@ -1,3 +1,4 @@
+
 <div class="container-fluid">
 <div class="row-fluid">
 	<div class="span12">
@@ -27,14 +28,14 @@
 					</div>
 				</div>
 				<div ng-repeat="name in order">
-					<div ng-form="form">
+					<div ng-form="form" ng-class="{hidePlaceholders:isDisabled}">
 							
 						<div class="control-group"  ng-switch="result.properties[name].type" ng-class="{error: form.$invalid && !form.$pristine && !isDisabled, success: form.$valid && !form.$pristine && !isDisabled, warning: form.$error.required && !isDisabled}">
 							<label class="control-label" ng-show="result.properties[name].type!='ruler'">{{result.properties[name].label}}</label>
 							
 
 							<div class="controls"  ng-switch-when="text">
-								<input class="input-xxlarge" type="text" ng-model="doc.properties[name]" placeholder="{{result.properties[name].default}}" ng-required="result.properties[name].required" ng-disabled="isDisabled"/> <span class="help-inline icon-flag" ng-show="form.$error.required && !isDisabled"></span><span class="icon-ok help-inline" ng-show="form.$valid && !form.$pristine"></span>
+								<input class="input-xxlarge" type="text" ng-model="doc.properties[name]" placeholder="{{result.properties[name].default}}" ng-required="result.properties[name].required" ng-disabled="isDisabled"/> <span class="	help-inline icon-flag" ng-show="form.$error.required && !isDisabled"></span><span class="icon-ok help-inline" ng-show="form.$valid && !form.$pristine"></span>
 							</div>
 
 

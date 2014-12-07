@@ -1,6 +1,8 @@
 // recreate elastic search
 var rp = require('request-promise');
 var Promise = require('bluebird');
+var fs = require('fs');
+
 var username = 'xxx'; //skriv eget
 var password = 'xxx'; //skriv eget
 var hostname= '127.0.0.1';

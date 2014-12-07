@@ -6,20 +6,22 @@ var fs = require('fs');
 // hvis der er en fil der hedder config.json (den holdes ude af git. Brug config-template.json som template)
 var username = 'xxx'; //skriv eget
 var password = 'xxx'; //skriv eget
-var hostname = '127.0.0.1'; 
-var dbname= 'metadata_data';
+var hostname = '127.0.0.1';
+var dbname = 'metadata_data';
 
 
-var inputfile = 'Mappe1.xlsx';
+var inputfile = 'Metadata_dec_2014_eksponent.xlsx';
 var schemaId = '848dc353c63f0054ce285e5e0b0537da';
 var createSchema = false;
 
-if(fs.existsSync('config.json')){
-    var cfg = JSON.parse(fs.readFileSync('config.json',{encoding:'UTF-8'}));    
-    username=cfg.username;
-    password=cfg.password;
-    hostname=cfg.hostname;
-    dbname=cfg.dbname;
+if (fs.existsSync('config.json')) {
+    var cfg = JSON.parse(fs.readFileSync('config.json', {
+        encoding: 'UTF-8'
+    }));
+    username = cfg.username;
+    password = cfg.password;
+    hostname = cfg.hostname;
+    dbname = cfg.dbname;
 }
 
 
@@ -60,13 +62,59 @@ http.get('http://' + hostname + ':5984/_uuids', function(res) {
                         lastRow = row;
                         doc = {
                             "type": "data",
-                            "imported":true,
-                            "schema":  createSchema ? uuid : schemaId,
-                            "properties": {}
+                            "imported": true,
+                            "schema": createSchema ? uuid : schemaId,
+                            "properties": {},
+                            "data":{}
                         };
 
                     }
-                    doc.properties[kolonner[col]] = xlsx.Sheets[sheet1][cell].v;
+                    var propertyValue = xlsx.Sheets[sheet1][cell].v;
+
+                    if (kolonner[col] === 'forvaltning' || kolonner[col]==='opdateringsfrekvens') {
+                        propertyValue = propertyValue.toLowerCase();
+                    }
+
+
+                    if (kolonner[col] === 'serviceområde') {
+                        switch(propertyValue.trim()){
+                            case 'Byens Udvikling':
+                                propertyValue='bu';
+                                break;
+                            case 'Byens Fysik':
+                                propertyValue='bf';
+                                break;
+                            case 'Byens Drift':
+                                propertyValue='bd';
+                                break;
+                            case 'Byens Anvendelse':
+                                propertyValue='ba';
+                                break;
+                        }
+                    }
+
+
+                    // håndter udstilling
+                    if(kolonner[col]==='Udstilling KBHkort' && propertyValue==='Ja'){
+                        doc.properties.data = doc.properties.data||{};   
+                        doc.properties.data['Eksternt på Københavnerkortet']=true;
+                        continue;
+                    }
+                    if(kolonner[col]==='Udstilling kkkort' && propertyValue==='Ja'){
+                        doc.properties.data = doc.properties.data||{};
+                        doc.properties.data['Internt på KKkort']=true;
+                        continue;
+                    }
+                    if(kolonner[col]==='Udstilling Data.kk' && propertyValue==='Ja'){
+                        doc.properties.data = doc.properties.data||{};
+                        doc.properties.data['Eksternt på data.kk.dk']=true;
+                        continue;
+                    }
+                    
+
+
+
+                    doc.properties[kolonner[col]] = propertyValue;
                 } catch (err) {
                     console.log(err.message);
                 }
@@ -98,7 +146,7 @@ http.get('http://' + hostname + ':5984/_uuids', function(res) {
             var options = {
                 hostname: hostname,
                 port: 5984,
-                path: '/'+dbname+'/' + uuid,
+                path: '/' + dbname + '/' + uuid,
                 method: 'PUT',
                 auth: username + ':' + password,
                 headers: {
@@ -124,8 +172,8 @@ http.get('http://' + hostname + ':5984/_uuids', function(res) {
             reqSchema.write(JSON.stringify(schema));
             reqSchema.end();
 
-        }else{
-        	saveDocs();
+        } else {
+            saveDocs();
         }
 
 
@@ -143,7 +191,7 @@ http.get('http://' + hostname + ':5984/_uuids', function(res) {
             var optionsDocs = {
                 hostname: hostname,
                 port: 5984,
-                path: '/'+dbname+'/_bulk_docs',
+                path: '/' + dbname + '/_bulk_docs',
                 method: 'POST',
                 auth: username + ':' + password,
                 headers: {

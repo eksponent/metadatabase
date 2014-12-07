@@ -1,5 +1,5 @@
 function (newDoc, oldDoc, userCtx) {   
-return;// disable security
+//return;// disable security
 if (userCtx.roles.indexOf('_admin') !== -1 || userCtx.roles.indexOf('metadata') !== -1) {
 		return;
 	} else {  

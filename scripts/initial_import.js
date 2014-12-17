@@ -57,8 +57,12 @@ http.get('http://' + hostname + ':5984/_uuids', function(res) {
             } else {
                 try {
                     if (!lastRow || (lastRow && lastRow[0] != row[0])) {
-                        if (doc)
+                        if (doc){
+                            if(!doc.properties.titel){
+                                doc.properties.titel=doc.properties.datasætnavn;
+                            }
                             docs.push(doc);
+                        }
                         lastRow = row;
                         doc = {
                             "type": "data",

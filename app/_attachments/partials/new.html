@@ -2,22 +2,9 @@
 <div class="row-fluid">
 	<div class="span12">
 		<div class="container">
-		<div ng-show="showSchemas">
-			<form class="form-horizontal" >
-				<div class="control-group">
-					<label class="control-label" for="selectSchema">Vælg type</label>
-					<div class="controls">
-						<select ng-model="schema" ng-options="s.key for s in results" ng-change="change()">
-						</select>
-					</div>
-				</div>
-			</form>
-			<hr/>
-		</div>
-		<div class="alert alert-error" ng-show="showMissing">
-			<h1><i class="icon-frown icon-4x"></i>Dokumentet findes ikke</h1>
-		</div>
-		
+            <div class="alert alert-error" ng-show="showMissing">
+                <h1><i class="icon-frown icon-4x"></i>Dokumentet findes ikke</h1>
+            </div>
 			<form class="form-horizontal" name="my_form" novalidate ng-show="!showMissing">
 				<div class="control-group">
 					<div class="controls">
@@ -28,10 +15,10 @@
 				</div>
 				<div ng-repeat="name in order">
 					<div ng-form="form" ng-class="{hidePlaceholders:isDisabled}">
-							
+
 						<div ng-hide="result.properties[name].hide" class="control-group"  ng-switch="result.properties[name].type" ng-class="{error: form.$invalid && !form.$pristine && !isDisabled, success: form.$valid && !form.$pristine && !isDisabled, warning: form.$error.required && !isDisabled}">
 							<label class="control-label" ng-show="result.properties[name].type!='ruler'">{{result.properties[name].label}}</label>
-							
+
 
 							<div class="controls"   ng-switch-when="text">
 								<input class="input-xxlarge" type="text" ng-model="doc.properties[name]" placeholder="{{result.properties[name].default}}" ng-required="result.properties[name].required" ng-disabled="isDisabled"/> <span class="	help-inline icon-flag" ng-show="form.$error.required && !isDisabled"></span><span class="icon-ok help-inline" ng-show="form.$valid && !form.$pristine"></span>
@@ -93,10 +80,10 @@
 						</div>
 					</div>
 				</div>
-				
+
 			</form>
 			<div class="alert alert-warning" ng-show="my_form.$error.required && !isDisabled">
-				<strong><i class="icon-flag"></i></strong> Felter er påkrævet 
+				<strong><i class="icon-flag"></i></strong> Felter er påkrævet
 			</div>
 			<div class="alert alert-error" ng-show="showError && !isDisabled">
 				<strong>{{status}}</strong> {{data.reason}}

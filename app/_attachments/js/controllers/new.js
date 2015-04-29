@@ -12,21 +12,7 @@ angular.module("metadata.controllers")
             $rootScope.isDisabled = false;
             $rootScope.instance = $routeParams.instance;
             var instance = "/" + $routeParams.instance + "/";
-            $http({
-                method: "GET",
-                url: instance + "_design/app/_view/schema"
-            }).
-            success(function(data, status, headers, config) {
-                $scope.results = data.rows; // this callback will be called asynchronously
-                if (data.rows.length > 0)
-                    $scope.schema = data.rows[0];
-                $scope.change();
-                // when the response is available
-            }).
-            error(function(data, status, headers, config) {
-                // called asynchronously if an error occurs
-                // or server returns response with an error status.
-            });
+            $scope.schema = {id: "848dc353c63f0054ce285e5e0b0537da", key: "Metadata-opslag", value: null};
             $scope.change = function() {
                 $http({
                     method: "GET",
@@ -66,6 +52,8 @@ angular.module("metadata.controllers")
                     // or server returns response with an error status.
                 });
             };
+            // Call in order to initialize view.
+            $scope.change();
 
             $scope.gem = function() {
                 $scope.spinner = "icon-spinner icon-spin icon-large";
